@@ -36,7 +36,7 @@ build_polkadot: polkadot_builder
 	@[ -d $(pwd)/builder_polkadot ] || mkdir $(pwd)/builder_polkadot
 	@[ -f $(pwd)/builder_polkadot/polkadot_build.sh ] || cp $(pwd)/bin/polkadot_build.sh $(pwd)/builder_polkadot/polkadot_build.sh \
 		&& chmod +x $(pwd)/builder_polkadot/polkadot_build.sh
-	@docker run --name polkadot_builder -it \
+	@docker run --name polkadot_builder \
 		-v $(pwd)/builder_polkadot:/builder:rw \
 		polkadot_builder /builder/polkadot_build.sh
 	@docker rm polkadot_builder
@@ -59,7 +59,7 @@ build_phala_node: phala_node_builder
 	@[ -d $(pwd)/builder_phala ] || mkdir $(pwd)/builder_phala
 	@[ -f $(pwd)/builder_phala/phala_node_build.sh ] || cp $(pwd)/bin/phala_node_build.sh $(pwd)/builder_phala/phala_node_build.sh \
 		&& chmod +x $(pwd)/builder_phala/phala_node_build.sh
-	@docker run --name phala_node_builder -it \
+	@docker run --name phala_node_builder \
 		-v $(pwd)/builder_phala:/builder:rw \
 		phala_node_builder /builder/phala_node_build.sh
 	@docker rm phala_node_builder
