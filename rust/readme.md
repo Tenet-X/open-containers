@@ -45,3 +45,40 @@ docker push gcr.io/[GCP_PROJECTID]/rustbuilder:latest
 ```
 docker pull gcr.io/[GCP_PROJECTID]/rustbuilder:latest
 ```
+
+### Access private gcr.io registry in k8s/GKE
+
+#### Create a Service Account
+
+1. Create an IAM service account
+
+```
+gcloud iam service-accounts create [account-name]
+```
+
+2. Grant the service account access to Container Registry.
+
+```
+gcloud projects add-iam-policy-binding [project-id] \
+  --member serviceAccount:[account-name]@[project-id].iam.gserviceaccount.com \
+  --role roles/storage.objectViewer
+```
+
+3. Download the account's service account kay
+
+```
+gcloud iam service-accounts keys create key.json \
+  --iam-account [account-name]@[project-id].iam.gserviceaccount.com
+```
+
+#### Define a k8s secret
+
+```
+kubectl create secret docker-registry gcr-secret \
+    --docker-server=gcr.io \
+    --docker-username=_json_key \
+    --docker-email=[account-name]@[project-id].iam.gserviceaccount.com \
+    --docker-password="$(cat key.json)"
+```
+
+You may want to tidy things up by running `rm key.json`.
