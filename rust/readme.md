@@ -82,3 +82,33 @@ kubectl create secret docker-registry gcr-secret \
 ```
 
 You may want to tidy things up by running `rm key.json`.
+
+#### Make use the image pull screte in your `yaml` deployment file
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: [pod-name]
+spec:
+  containers:
+  - name: [container-name]
+    image: gcr.io/[project-id]/hello-app:v1
+  imagePullSecrets:
+  - name: [secret-name]
+```
+
+for exammple
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-pod
+spec:
+  containers:
+  - name: hello-container
+    image: gcr.io/[project-id]/hello-app:v1
+  imagePullSecrets:
+  - name: gcr-secret
+```
