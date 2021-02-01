@@ -1,0 +1,17 @@
+FROM ubuntu:20.04
+
+USER root
+
+# download node.js
+RUN mkdir -p /opt/tools/nodejs
+
+# add nodjs for linux x64
+ADD ./tmp/nodejs/ /opt/tools/nodejs/
+
+# set path for node realated commands
+ENV PATH $PATH:/opt/tools/nodejs/bin
+
+# upgrade npm
+RUN npm install -g npm
+
+RUN echo -n 'node version: '; node -v; echo -n 'npm version: '; npm -v
