@@ -34,7 +34,7 @@ polkadot_builder: rbnightly $(pwd)/Dockerfile.d/Dockerfile.builder.polkadot
 # build the polkadot binary
 build_polkadot: polkadot_builder
 	@[ -d $(pwd)/builder_polkadot ] || mkdir $(pwd)/builder_polkadot
-	@[ -f $(pwd)/builder_polkadot/polkadot_build.sh ] || cp $(pwd)/bin/polkadot_build.sh $(pwd)/builder_polkadot/polkadot_build.sh \
+	cp $(pwd)/bin/polkadot_build.sh $(pwd)/builder_polkadot/polkadot_build.sh \
 		&& chmod +x $(pwd)/builder_polkadot/polkadot_build.sh
 	@docker run --name polkadot_builder \
 		-v $(pwd)/builder_polkadot:/builder:rw \
@@ -57,7 +57,7 @@ phala_node_builder: rbnightly $(pwd)/Dockerfile.d/Dockerfile.builder.phala_node
 # build the phala binary
 build_phala_node: phala_node_builder
 	@[ -d $(pwd)/builder_phala ] || mkdir $(pwd)/builder_phala
-	@[ -f $(pwd)/builder_phala/phala_node_build.sh ] || cp $(pwd)/bin/phala_node_build.sh $(pwd)/builder_phala/phala_node_build.sh \
+	cp $(pwd)/bin/phala_node_build.sh $(pwd)/builder_phala/phala_node_build.sh \
 		&& chmod +x $(pwd)/builder_phala/phala_node_build.sh
 	@docker run --name phala_node_builder \
 		-v $(pwd)/builder_phala:/builder:rw \
