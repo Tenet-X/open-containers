@@ -12,12 +12,16 @@ RUN apt-get update && \
     apt-get clean -y
 
 COPY ./builder_phala/phala-blockchain/target/$PROFILE/phala-node /root/phala-node
-RUN curl -o /root/start_node.sh https://raw.githubusercontent.com/Tenet-X/phala-docker/master/dockerfile.d/start_node.sh \
-    && chmod +x /root/start_node.sh
+#RUN curl -o /root/start_node.sh https://raw.githubusercontent.com/Tenet-X/phala-docker/master/dockerfile.d/start_node.sh \
+#    && chmod +x /root/start_node.sh
 
 ENV NODE_NAME='phala-node'
 ENV EXTRA_OPTS=''
 
 EXPOSE 9615 9933 9944 30333
 
-CMD ["/root/start_node.sh"]
+#CMD ["/root/start_node.sh"]
+
+ENTRYPOINT ["/root/phala-node"]
+
+CMD ["--chain=phala", "--base-path", "$HOME/data", "--database=paritydb", "--name", "$(NODE_NAME)", "--pruning=archive", "--rpc-port=9933", "--ws-port=9944", "--prometheus-external", "$EXTRA_OPTS"]
