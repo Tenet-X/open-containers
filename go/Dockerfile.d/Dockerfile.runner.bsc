@@ -1,0 +1,22 @@
+FROM ubuntu:20.04
+LABEL description="This is the 2nd stage: a very small image where we copy the BSC binary."
+
+ARG PROFILE=release
+
+COPY ./builder_bsc/bsc/build/bin/geth /usr/local/bin
+
+# RUN apt install -y ca-certificates curl jq
+
+RUN useradd -m -u 1000 -U -s /bin/sh -d /bsc bsc && \
+    mkdir -p /bsc/.local/share && \
+    mkdir /data && \
+    chown -R bsc:bsc /data && \
+    ln -s /data /bsc/.local/share/bsc && \
+    rm -rf /usr/bin /usr/sbin
+
+USER bsc
+EXPOSE 8545 8546 8547 30303 30303/udp
+VOLUME ["/data"]
+
+CMD ["/usr/local/bin/geth"]
+

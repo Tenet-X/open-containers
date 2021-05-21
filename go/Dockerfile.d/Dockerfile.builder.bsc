@@ -1,0 +1,14 @@
+FROM gobuilder:latest
+LABEL descritption="Binance Smart Chain builder"
+LABEL maintainer="bindiego@outlook.com"
+
+ENV BRANCH=HEAD
+
+# RUN apt install -y make gcc musl-dev linux-headers git bash
+
+ADD ./bin/bsc_build.sh ./bsc_build.sh
+
+RUN chmod +x ./bsc_build.sh
+
+# this for CI tool e.g. as builder @line 1
+# RUN ./bsc_build.sh
