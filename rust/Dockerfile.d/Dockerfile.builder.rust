@@ -21,9 +21,9 @@ RUN apt update \
     && apt autoremove -y; apt clean -y
 
 # install rust build env
-ENV RUSTUP_HOME=/usr/local/rustup \
-    CARGO_HOME=/usr/local/cargo \
-    PATH=/usr/local/cargo/bin:$PATH 
+ENV RUSTUP_HOME=/usr/local/rustup
+ENV CARGO_HOME=/usr/local/cargo
+ENV PATH=/usr/local/cargo/bin:$PATH 
 
 RUN set -eux; \
     curl https://sh.rustup.rs -sSf | sh -s -- -y \
